@@ -21,7 +21,7 @@
 @section('content')
 
 
-	<h1>hola mundo</h1>
+	<h1>{{ Auth::user()->name }}</h1>
 
 
 @stop
