@@ -16,7 +16,7 @@ class CreateDocumentsTable extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('url');
+            $table->string('document');
             $table->boolean('status')->default(true);
             $table->boolean('notification')->default(false);
             $table->date('date');

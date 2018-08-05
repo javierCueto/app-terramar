@@ -23,8 +23,9 @@ Route::get('/laravel', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/system', 'HomeController@index')->name('system');
 
-Route::get('dashboard', function () {
-    return view('admin.dashboard');
-});
+
+Route::get('/system/document/load', 'DocumentController@index');
+Route::post('/system/document', 'DocumentController@store');
+

@@ -28,7 +28,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md fixed-top navbar-transparent" color-on-scroll="500">
+    <nav class="navbar navbar-expand-md fixed-top navbar-transparent bg-danger" color-on-scroll="20">
         <div class="container">
             <div class="navbar-translate">
                 <button class="navbar-toggler navbar-toggler-right navbar-burger" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,6 +55,13 @@
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Registro') }}</a>
                             </li>
                         @else
+                             <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/system') }}">{{ __('Documentos') }}</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/system/document/load') }}">{{ __('Cargar documento') }}</a>
+                            </li>
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="dropdownMenuButton" href="#pk" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }}</a>
@@ -73,6 +80,7 @@
                              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
+                           
 
                         @endguest
 
