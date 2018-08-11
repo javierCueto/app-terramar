@@ -12,4 +12,21 @@ class document extends Model
     	return '/images/documents/'.$this->document;
 
     }
+
+
+    public function user()
+    {
+      //return $this->belongsTo('App\role');
+
+      return $this->belongsTo('App\User');
+    }
+
+
+
+
+    public function getNameUserAttribute(){
+            return $this->user->name;
+
+    }
+
 }

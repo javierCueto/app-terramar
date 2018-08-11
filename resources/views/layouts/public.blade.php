@@ -28,7 +28,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md fixed-top navbar-transparent bg-danger" color-on-scroll="20">
+    <nav class="navbar navbar-expand-md fixed-top navbar-transparent bg-danger" color-on-scroll="2">
         <div class="container">
             <div class="navbar-translate">
                 <button class="navbar-toggler navbar-toggler-right navbar-burger" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -113,4 +113,5 @@
 <!--  Paper Kit Initialization and functons -->
 <script src="{{ asset('assets/js/paper-kit.js?v=2.1.0') }}"></script>
 
+  @yield('scripts')
 </html>

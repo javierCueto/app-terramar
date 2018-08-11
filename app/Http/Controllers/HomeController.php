@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\document;
 
 class HomeController extends Controller
@@ -24,8 +25,15 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $user_id=Auth::user()->id;
+       
+        if(Auth::user()->role_id==1){
+            $documents= document::all();
+        }else{
+            $documents= document::where('user_id',$user_id)->get();
+        }
 
-        $documents= document::all();
+        
         return view('system.index')->with(compact('documents'));
     }
 }

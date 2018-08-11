@@ -42,15 +42,41 @@ class DocumentController extends Controller
 	           $fileFac->user_id=$user_id;
 	           $fileFac->save();
 	           $fileName='images/documents/'.$fileName;
-	         
-	           Mail::send('system.documents.send',['filename' => $fileName, 'name'=> $name],function($msj){
-    			$msj->subject('Se cargo un nuevo archivo');
-    			$msj->to($this->user_mail);
-				$msj->cc('javeliecm@gmail.com');
-    			});
+	         try {
+                Mail::send('system.documents.send',['filename' => $fileName, 'name'=> $name],function($msj){
+                    $msj->subject('Se cargo un nuevo archivo');
+                    $msj->to($this->user_mail);
+                    $msj->cc('javeliecm@gmail.com');
+                });
+                 
+             } catch (Exception $e) {
+                 return response()->json(['success'=>'Datos Cargados Correctamente, pero el correo no se envio']);
+             }
+	           
 	      }
 
-	    return redirect('system');
+          return response()->json(['success'=>'Datos Cargados Correctamente']);
+
+	   // return redirect('system');
     }
+
+
+
+
+     public function destroy($id){
+        $notification="No fue posible eliminar el  documento, no existe o esta siendo utilizado :(";
+        $documentf=document::find($id);
+   
+        $fullPath=public_path() . '/images/documents/'.$documentf->document;
+        $deleted=File::delete($fullPath); 
+        
+
+        if($deleted){
+               $documentf->delete();
+                $notification="Documento eliminado :)";
+          }
+         return back()->with(compact("notification"));
+     }
+
 
 }
