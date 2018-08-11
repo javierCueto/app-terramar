@@ -55,7 +55,7 @@ class DocumentController extends Controller
 	           
 	      }
 
-          return response()->json(['success'=>'Datos Cargados Correctamente']);
+          return response()->json(['success'=>'Datos Cargados Correctamente, desea cargar mas?']);
 
 	   // return redirect('system');
     }

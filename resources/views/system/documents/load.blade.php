@@ -127,9 +127,9 @@
         }
       });
 
-        setTimeout(function() {
-          jQuery('.mess').hide();
-        },3000);
+        // setTimeout(function() {
+        //   jQuery('.mess').hide();
+        // },3000);
     });
   });
 
