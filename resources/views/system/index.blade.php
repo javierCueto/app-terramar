@@ -21,7 +21,42 @@
     
        
     <div class="row">
+
         <div class="col-md-12">
+          <div class="row">
+
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+              <form action="{{ url('create-zip')}}" method="post">
+                @csrf
+                <div class="form-group">
+                  <label for="fechainial">Fecha Inicial</label>
+                  <input type="date" class="form-control" id="fechainicial" name="fechainicial" placeholder="" required="">
+                  <input type="hidden" class="form-control" id="douwload" name="download" value="zip">
+                </div>
+
+                <div class="form-group">
+                  <label for="fechafianal">Fecha Final</label>
+                  <input type="date" class="form-control" id="fechafinal" name="fechafinal" placeholder="" required="">
+                </div>
+
+
+                <div class="form-group">
+                  <button class="btn btn-danger" type="submit" >Download ZIP</button>
+                  <!-- <a href="{{ route('create-zip',['download'=>'zip']) }}" class="btn btn-info" >Download ZIP</a>  -->
+                </div>
+                     
+                  
+              </form>
+            </div>
+            <div class="col-md-3"></div>
+          </div>
+          
+       
+       
+        </div>
+        <div class="col-md-12">
+           
         @if(session('notification'))
           <div class="alert alert-success">
             {{session('notification')}}

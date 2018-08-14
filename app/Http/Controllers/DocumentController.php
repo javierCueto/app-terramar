@@ -9,6 +9,8 @@ use Mail;
 Use Session;
 use Redirect;
 use File;
+use ZipArchive;
+
 
 class DocumentController extends Controller
 {
@@ -76,6 +78,56 @@ class DocumentController extends Controller
                 $notification="Documento eliminado :)";
           }
          return back()->with(compact("notification"));
+     }
+
+
+     public function zip(Request $request){
+
+       $initial=\Carbon\Carbon::parse($request->fechainicial)->format('Y-m-d');
+        $finald=\Carbon\Carbon::parse($request->fechafinal)->format('Y-m-d');
+
+        if($request->has('download')) {
+            $user_id=Auth::user()->id;
+       
+            
+            $documents= document::where('user_id',$user_id)
+                                ->where('date',">=",$initial)  
+                                ->where('date',"<=",$finald)  
+                                ->get();
+            
+
+
+
+
+            // Define Dir Folder
+            $public_dir=public_path();
+            // Zip File Name
+            $zipFileName = 'AllDocuments.zip';
+            $fullPath=public_path() . '/downloads/facturas/'.$zipFileName ;
+            $deleted=File::delete($fullPath); 
+
+            // Create ZipArchive Obj
+            $zip = new ZipArchive;
+
+            if ($zip->open($public_dir . '/downloads/facturas/' . $zipFileName, ZipArchive::CREATE) === TRUE) {    
+                // Add Multiple file   
+                foreach($documents as $document) {
+                    $zip->addFile($public_dir . '/images/documents/'.$document->document, $document->document);
+                }        
+                $zip->close();
+            }
+
+            // Set Header
+            $headers = array(
+                'Content-Type' => 'application/octet-stream',
+            );
+            $filetopath=$public_dir.'/downloads/facturas/'.$zipFileName;
+            // Create Download Response
+            if(file_exists($filetopath)){
+                return response()->download($filetopath,$zipFileName,$headers);
+            }
+        }
+        return back();
      }
 
 

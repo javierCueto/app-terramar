@@ -21,6 +21,9 @@ Route::get('/laravel', function () {
 });
 
 
+Route::post('create-zip', 'DocumentController@zip')->name('create-zip');
+
+
 Auth::routes();
 
 
