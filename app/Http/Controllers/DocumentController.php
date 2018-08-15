@@ -90,19 +90,15 @@ class DocumentController extends Controller
             $user_id=Auth::user()->id;
        
             
-            $documents= document::where('user_id',$user_id)
-                                ->where('date',">=",$initial)  
+            $documents= document::where('date',">=",$initial)  
                                 ->where('date',"<=",$finald)  
                                 ->get();
             
 
-
-
-
             // Define Dir Folder
             $public_dir=public_path();
             // Zip File Name
-            $zipFileName = 'AllDocuments.zip';
+            $zipFileName = 'All.zip';
             $fullPath=public_path() . '/downloads/facturas/'.$zipFileName ;
             $deleted=File::delete($fullPath); 
 
@@ -111,10 +107,15 @@ class DocumentController extends Controller
 
             if ($zip->open($public_dir . '/downloads/facturas/' . $zipFileName, ZipArchive::CREATE) === TRUE) {    
                 // Add Multiple file   
+
+                $cont=0;
                 foreach($documents as $document) {
                     $zip->addFile($public_dir . '/images/documents/'.$document->document, $document->document);
+                    $cont++;
                 }        
+
                 $zip->close();
+
             }
 
             // Set Header

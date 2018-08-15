@@ -29,7 +29,7 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <i class="nc-icon nc-simple-remove"></i>
                     </button>
-                    <div class="message"> <i class="nc-icon nc-bell-55"> </i></div>
+                    <div class="message"></div>
                 </div>
             </div>
         </div>
@@ -111,7 +111,7 @@
         success: function(result){ 
           $('#myModal').modal('hide');
 
-          jQuery('.message').append(result.success);
+          jQuery('.message').html('<i class="nc-icon nc-bell-55"></i> '+result.success);
 
            
           jQuery('.mess').show();

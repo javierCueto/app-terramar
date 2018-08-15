@@ -26,14 +26,15 @@ class HomeController extends Controller
     public function index()
     {
         $user_id=Auth::user()->id;
+        $role=Auth::user()->role_id;
        
-        if(Auth::user()->role_id==1){
-            $documents= document::all();
+        if($role==1){
+            $documents= document::paginate(10);
         }else{
-            $documents= document::where('user_id',$user_id)->get();
+            $documents= document::where('user_id',$user_id)->paginate(10);
         }
 
         
-        return view('system.index')->with(compact('documents'));
+        return view('system.index')->with(compact('documents','role'));
     }
 }
