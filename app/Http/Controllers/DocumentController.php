@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\document;
+use App\companie;
 use Mail;
 Use Session;
 use Redirect;
@@ -131,5 +132,31 @@ class DocumentController extends Controller
         return back();
      }
 
+
+
+
+    public function show($companie){
+
+      $companieId=companie::where("name_short",$companie)->first();
+      
+      $user_id=Auth::user()->id;
+      $role=Auth::user()->role_id;
+
+      if(is_null($companieId) || empty($companieId)){
+          abort(404);
+        }
+
+        $name_companie=$companieId->name;
+
+       if($role==1){
+            $documents= document::where("companie_id",$companieId->id)->paginate(10);
+        }else{
+            $documents= document::where('user_id',$user_id)->paginate(10);
+        }
+
+        
+
+        return view('system.companies.documents')->with(compact('documents','role','name_companie'));
+    }
 
 }

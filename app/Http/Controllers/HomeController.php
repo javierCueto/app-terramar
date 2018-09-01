@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\document;
+use Illuminate\Support\Facades\DB;
+use App\companie;
 
 class HomeController extends Controller
 {
@@ -25,16 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user_id=Auth::user()->id;
-        $role=Auth::user()->role_id;
-       
-        if($role==1){
-            $documents= document::paginate(10);
-        }else{
-            $documents= document::where('user_id',$user_id)->paginate(10);
-        }
+        return view('public.index');
 
-        
-        return view('system.index')->with(compact('documents','role'));
     }
 }

@@ -56,12 +56,16 @@
                             </li>
                         @else
                              <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/system') }}">{{ __('Documentos') }}</a>
+                                <a class="nav-link" href="{{ url('/system/companie') }}">{{ __('Empresas') }}</a>
                             </li>
-
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/system/user') }}">{{ __('Usuarios') }}</a>
+                            </li>
+                            @if((Auth::user()->role->id)==3 )
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('/system/document/load') }}">{{ __('Cargar documento') }}</a>
                             </li>
+                            @endif
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="dropdownMenuButton" href="#pk" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }}</a>

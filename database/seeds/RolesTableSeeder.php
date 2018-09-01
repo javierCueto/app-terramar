@@ -23,8 +23,8 @@ class RolesTableSeeder extends Seeder
         ]);
 
         role::create([
-        	'name'=>'Proveedor',
-            'type'=>'normal'
+        	'name'=>'Empresa',
+            'type'=>'empresa'
         ]);
     }
 }

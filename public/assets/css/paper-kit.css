@@ -5931,3 +5931,9 @@ textarea.form-control {
 .following img {
   max-width: 70px;
 }
+
+
+
+.no-margin{
+  margin-bottom: 0;
+}
