@@ -37,5 +37,26 @@ class User extends Authenticatable
     }
 
 
+     public function companie()
+    {
+      //return $this->belongsTo('App\role');
+
+      return $this->belongsTo('App\companie');
+    }
+
+
+     public function getRoleNameAttribute()
+    {
+      //return $this->belongsTo('App\role');
+      return $this->role->name;
+    }
+
+
+     public function getCompanieNameAttribute()
+    {
+      //return $this->belongsTo('App\role');
+      return $this->companie->name;
+    }
+
 
 }

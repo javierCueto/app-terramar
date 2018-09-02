@@ -9,21 +9,28 @@
     </div>              
 </div>
 
-<div class="jumbotron jumbotron-fluid">
+
+<nav class="navbar navbar-expand-md bg-primary">
   <div class="container">
-    @if($available!=0)
-
-    <h2>{{$available}} empresas disponibles</h2>
-    <button type="button" class="btn btn-outline-default btn-round" data-toggle="modal" data-target="#myModal">
-    <i class="fa fa-building"></i> Alta empresa
-  @else
-      <h2><i class="fa fa-building"></i> Empresas</h2>
-  @endif
-
-</button>
+      <button class="navbar-toggler navbar-toggler-right burger-menu" type="button" data-toggle="collapse" data-target="#navbar-primary" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-bar"></span>
+          <span class="navbar-toggler-bar"></span>
+          <span class="navbar-toggler-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><i class="fa fa-building"></i> Empresas</a>
+      <div class="collapse navbar-collapse" id="navbar-primary">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#myModal">{{$available}} <i class="fa fa-building"></i> Alta empresa</a>
+          </li>
+        </ul>
+      </div>
   </div>
-</div>
+</nav>
 
+<br>
+<br>
+<br>
 
 <div class="container">  
   <div class="row">
@@ -47,14 +54,8 @@
         </div>
       </div>
     @endforeach
-
   @endif
-
-
-
-
   </div>
-    
 </div>
 
 <!-- Modal -->

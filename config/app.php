@@ -174,7 +174,8 @@ return [
     */
 
     'aliases' => [
-
+        'admin'=>\App\Http\Middleware\AdminMiddleware::class,
+        'companie'=>\App\Http\Middleware\CompanieMiddleware::class,
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,

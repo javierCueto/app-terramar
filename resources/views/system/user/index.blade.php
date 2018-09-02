@@ -1,6 +1,12 @@
 @extends('layouts.public')
 @section('title','Inicio')
 
+@section('css')
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
+ 
+@endsection
+
 @section('content')
 
 <div class="wrapper">
@@ -9,22 +15,56 @@
     </div>              
 </div>
 
-<div class="jumbotron jumbotron-fluid no-margin">
-  <div class="container">
-    <h1>Administración de usuario</h1>
-  </div>
-</div>
 
-<div class="jumbotron jumbotron-fluid bg-dark">
+
+
+<nav class="navbar navbar-expand-md bg-dark">
   <div class="container">
-    <h2>  <button type="button" class="btn btn-outline-danger " data-toggle="modal" data-target="#myModal">Nuevo usuario</button></h2>
+      <button class="navbar-toggler navbar-toggler-right burger-menu" type="button" data-toggle="collapse" data-target="#navbar-primary" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-bar"></span>
+          <span class="navbar-toggler-bar"></span>
+          <span class="navbar-toggler-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><i class="fa fa-building"></i> Administración de usuario</a>
+      <div class="collapse navbar-collapse" id="navbar-primary">
+        <ul class="navbar-nav ml-auto">
+
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-building"></i> Nuevo usuario</a>
+          </li>
+ 
+        </ul>
+      </div>
   </div>
-</div>
+</nav>
+<br>
+<br>
+<br>
+
+
+
 
 
 <div class="container">  
   <div class="row">
     <div class="col-md-12">
+        <table id="usersTable" class="display table">
+          <td>
+            <thead class="thead-dark">
+              <tr>
+                  <th >Nombre de usuario</th>
+                  <th>Rol</th>
+                  <th>Email</th>
+                  <th>Empresa</th>
+              </tr>
+          </thead>
+          </td>
+
+        </table>
+        <br>
+        <br>
+                  
+
     </div>
   </div>
     
@@ -158,5 +198,44 @@
 
 
 @include('includes.footer')
+@endsection
+
+@section('scripts')
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+
+    <script>
+      var edit="{{url('/')}}"
+
+
+      $(document).ready(function() {
+
+            var table= $('#usersTable').DataTable( {
+                "ajax": '{{url("/api/user")}}',
+                "columns": [
+
+                    { data: "userName" },
+                    { data: "roleName" },
+                    { data: "userEmail" },
+                    {"defaultContent": '<button type="button" id="ButtonEditar" class="editar edit-modal btn btn-warning botonEditar"><span class="fa fa-edit"></span><span class="hidden-xs"> Editar</span></button>'}
+                ],
+
+                "language": {
+    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+  }
+
+          
+            } );
+
+            $('#usersTable tbody').on( 'click', 'button', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+         table.ajax.reload();
+        alert( data.id +"'s salary is: "+ data[ 5 ] );
+    } );
+
+
+        } );
+    </script>
+ 
 @endsection
 

@@ -9,14 +9,30 @@
     </div>              
 </div>
 
-<div class="jumbotron jumbotron-fluid">
+
+<nav class="navbar navbar-expand-md bg-dark">
   <div class="container">
-    <h2>{{$name_companie}}</h2>
-    @if($role!=1)
-    <a type="button" href="{{url('system/document/load')}}" class="btn btn-default "><i class="fa fa-file-pdf-o"></i> Cargar documento</a>
-    @endif
+      <button class="navbar-toggler navbar-toggler-right burger-menu" type="button" data-toggle="collapse" data-target="#navbar-primary" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-bar"></span>
+          <span class="navbar-toggler-bar"></span>
+          <span class="navbar-toggler-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><i class="fa fa-building"></i> {{$name_companie}}</a>
+      <div class="collapse navbar-collapse" id="navbar-primary">
+        <ul class="navbar-nav ml-auto">
+          @if(!count($documents)==0)
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-building"></i> Descargar facturas</a>
+          </li>
+          @endif
+        </ul>
+      </div>
   </div>
-</div>
+</nav>
+<br>
+<br>
+<br>
+
 
 
 <div class="container">  
@@ -31,40 +47,6 @@
 
       @if(!count($documents)==0)
 
-        @if($role==1)
-        <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <h3 class="bg-warnig">Descarga de archivos por rango de fecha</h3>
-          </div>
-          <form action="{{ url('create-zip')}}" method="post">
-            @csrf
-            <div class="form-group">
-              <label for="fechainial">Fecha Inicial</label>
-              <input type="date" class="form-control" id="fechainicial" name="fechainicial" placeholder="" required="">
-              <input type="hidden" class="form-control" id="douwload" name="download" value="zip">
-            </div>
-
-            <div class="form-group">
-              <label for="fechafianal">Fecha Final</label>
-              <input type="date" class="form-control" id="fechafinal" name="fechafinal" placeholder="" required="">
-            </div>
-
-
-            <div class="form-group">
-              <button class="btn btn-danger" type="submit" >Download ZIP</button>
-              <!-- <a href="{{ route('create-zip',['download'=>'zip']) }}" class="btn btn-info" >Download ZIP</a>  -->
-            </div>
-                 
-              
-          </form>
-        </div>
-        <div class="col-md-3"></div>
-        @endif
-
-     
-      </div>
         <table class="table">
           <thead class="thead-dark">
             <tr>
@@ -108,11 +90,19 @@
         {{$documents->links()}}
       
       @else
+      <br>
+      <br>
+      <br>
+      <br>
       <div class="alert alert-info">
           <div class="container">
               <span>No cuenta con ningun documento cargado :) </span>
           </div>
       </div>
+      <br>
+      <br>
+      <br>
+      <br>
       @endif
           
     </div>
@@ -120,6 +110,51 @@
     
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Nueva empresa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+           <form action="{{ url('create-zip')}}" method="post">
+            <div class="modal-body">
+
+              
+                  @csrf
+            <div class="form-group">
+              <label for="fechainial">Fecha Inicial</label>
+              <input type="date" class="form-control" id="fechainicial" name="fechainicial" placeholder="" required="">
+              <input type="hidden" class="form-control" id="douwload" name="download" value="zip">
+            </div>
+
+            <div class="form-group">
+              <label for="fechafianal">Fecha Final</label>
+              <input type="date" class="form-control" id="fechafinal" name="fechafinal" placeholder="" required="">
+            </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <div class="left-side">
+           
+              <button class="btn btn-danger" type="submit" >Download ZIP</button>
+          
+                </div>
+                <div class="divider"></div>
+                <div class="right-side">
+                    <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+              </form>
+
+        </div>
+    </div>
+</div>
 
 
 
