@@ -31,7 +31,7 @@ class UserController extends Controller
     	//$companies=companie::select('id','name')->where('status',true)->get();
 
     	$users=DB::table('users')
-    		->select('users.id as id','users.name as userName','users.email as userEmail','companies.name','roles.name as roleName')
+    		->select('users.id as id','users.name as userName','users.email as userEmail','companies.name as companieName','roles.name as roleName')
     		->leftJoin("companies","users.companie_id",'=',"companies.id")
     		->leftJoin("roles","roles.id",'=',"users.role_id")
     		->where('role_id','!=','1')

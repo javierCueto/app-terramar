@@ -53,9 +53,10 @@
             <thead class="thead-dark">
               <tr>
                   <th >Nombre de usuario</th>
+                  <th>Empresa</th>
                   <th>Rol</th>
                   <th>Email</th>
-                  <th>Empresa</th>
+                  <th>Acciones</th>
               </tr>
           </thead>
           </td>
@@ -215,6 +216,7 @@
                 "columns": [
 
                     { data: "userName" },
+                    { data: "companieName" },
                     { data: "roleName" },
                     { data: "userEmail" },
                     {"defaultContent": '<button type="button" id="ButtonEditar" class="editar edit-modal btn btn-warning botonEditar"><span class="fa fa-edit"></span><span class="hidden-xs"> Editar</span></button>'}
@@ -229,8 +231,9 @@
 
             $('#usersTable tbody').on( 'click', 'button', function () {
         var data = table.row( $(this).parents('tr') ).data();
-         table.ajax.reload();
-        alert( data.id +"'s salary is: "+ data[ 5 ] );
+         //table.ajax.reload();
+         alert('Lo estamos trabajando :)');
+        //alert( data.id +"'s salary is: "+ data[ 5 ] );
     } );
 
 

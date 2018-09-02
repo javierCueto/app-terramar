@@ -17,14 +17,17 @@
           <span class="navbar-toggler-bar"></span>
           <span class="navbar-toggler-bar"></span>
       </button>
-      <a class="navbar-brand" href="#"><i class="fa fa-building"></i> {{$name_companie}}</a>
+      <a class="navbar-brand" href="#"><i class="fa fa-building"></i> {{$companie->name}}</a>
       <div class="collapse navbar-collapse" id="navbar-primary">
         <ul class="navbar-nav ml-auto">
           @if(!count($documents)==0)
           <li class="nav-item">
-            <a class="nav-link" href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-building"></i> Descargar facturas</a>
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-file-pdf-o"></i> Descargar facturas</a>
           </li>
           @endif
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#empresaModal"><i class="fa fa-building"></i> Editar empresa</a>
+          </li>
         </ul>
       </div>
   </div>
@@ -55,7 +58,6 @@
               <th scope="col">Nombre</th>
               <th scope="col">url</th>
               <th scope="col">Fecha de carga</th>
-              <th scope="col">Eliminar</th>
             </tr>
           </thead>
            
@@ -69,18 +71,10 @@
               <td>{{$document->name_user}}</td>
               <td>{{$document->name}}</td>
               <td>
-                    <a class="text-danger" href="{{url($document->url)}}">{{$document->document}}</a>
+                    <a class="text-danger" href="{{url($document->url.$document->document)}}">{{$document->document}}</a>
               </td>
               <td>{{$document->created_at->format('d/m/Y')}}</td>
-              <td class="text-success">
-                <form action="{{url('/system/document/delete/'.$document->id.'')}}" method="post">
-                                 {{csrf_field()}}
-                                 {{method_field('DELETE')}}
-                  <button type="submit" rel="tooltip" title="Eliminar producto de la faz de la Tierra" class="btn btn-danger btn-simple btn-xs">
-                                <i class="fa fa-times"></i>
-                  </button>
-                </form>
-              </td>
+
             </tr>
             @endforeach
            
@@ -116,7 +110,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-center" id="exampleModalLabel">Nueva empresa</h5>
+                <h5 class="modal-title text-center" id="exampleModalLabel">Rango de fecha</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -136,6 +130,7 @@
               <label for="fechafianal">Fecha Final</label>
               <input type="date" class="form-control" id="fechafinal" name="fechafinal" placeholder="" required="">
             </div>
+             <input type="hidden" class="form-control" id="idem" name="idem" placeholder="Nombre de la empresa" value="{{$companie->id}}" required="">
 
 
             </div>
@@ -143,6 +138,50 @@
                 <div class="left-side">
            
               <button class="btn btn-danger" type="submit" >Download ZIP</button>
+          
+                </div>
+                <div class="divider"></div>
+                <div class="right-side">
+                    <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+              </form>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="empresaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Rango de fecha</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+           <form action="{{ url('/system/companie/edit/'.$companie->id)}}" method="post">
+            <div class="modal-body">
+
+               {{csrf_field()}}
+                <div class="form-group">
+                  <label for="name">Nombre de la empresa</label>
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Nombre de la empresa" value="{{$companie->name}}" required="">
+                </div>
+
+
+                <div class="form-group">
+                  <label for="email">Email donde se notificara</label>
+                  <input type="email" class="form-control" id="email" name="email" placeholder="Correo" required="" value="{{$companie->email}}">
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <div class="left-side">
+           
+              <button class="btn btn-danger" type="submit" >Guardar</button>
           
                 </div>
                 <div class="divider"></div>

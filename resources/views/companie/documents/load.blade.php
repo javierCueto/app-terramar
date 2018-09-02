@@ -102,7 +102,7 @@
 
 
       jQuery.ajax({
-        url: "{{ url('system/document') }}",
+        url: "{{ url('companie/document') }}",
         method: 'post',
         data: formData,
         cache: false,

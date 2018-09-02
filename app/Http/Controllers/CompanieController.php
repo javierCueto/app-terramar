@@ -29,5 +29,15 @@ class CompanieController extends Controller
 
     }
 
+    public function update(Request $request, $id){
+        $companie=companie::find($id);
+        $companie->name=$request->input('name');
+        $companie->email=$request->input('email');
+        $companie->save();
+        
+        return back();
+
+    }
+
 
 }

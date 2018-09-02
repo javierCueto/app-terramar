@@ -80,12 +80,12 @@
 
                 <div class="form-group">
                   <label for="name_shot">*Nombre corto</label>
-                  <input type="text" class="form-control" id="name_short" name="name_short" placeholder="Nombre corto" required="">
+                  <input type="text" class="form-control" id="name_short" name="name_short" placeholder="Nombre corto sin espacios" required="" pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]*$" title="Nombre sin espacios ni caracteres especiales">
                 </div>
 
                 <div class="form-group">
                   <label for="email">Email donde se notificara</label>
-                  <input type="email" class="form-control" id="email" name="email" placeholder="Correo" required="">
+                  <input type="email" class="form-control" id="email" name="email" placeholder="Correo" required="" >
                 </div>
 
             </div>
@@ -108,3 +108,12 @@
 @include('includes.footer')
 @endsection
 
+@section('scripts')
+
+<script> 
+
+
+</script>
+
+
+@endsection

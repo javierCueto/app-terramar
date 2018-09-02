@@ -15,46 +15,54 @@ use ZipArchive;
 
 class DocumentController extends Controller
 {
-    public function index(){
-    	 return view('system.documents.load');
+    public function index($companieName){
+    	 return view('companie.documents.load');
     }
 
 
 
     public $user_mail;
+    public $empresa_mail;
     public function store(Request $request){
     	
-    	
+
     	$now = new \DateTime();
- 		$date_Actual =$now->format('Y-m-d');
-    	$user_id=Auth::user()->id;
+      $date_Actual =$now->format('Y-m-d');
+ 		  $monthYear =$now->format('Y-m');
+      $user_id=Auth::user()->id;
+      $namecompanie=Auth::user()->companie->name_short;
+      $idcompanie=Auth::user()->companie_id;
+    	$this->empresa_mail=Auth::user()->companie->email;
     	$this->user_mail=Auth::user()->email;
+
 
     	$file=$request ->file('document');
     	$name=$request ->input('name');
-     	$path=public_path() . '/images/documents';
+     	$path=public_path() . '/files/'.$namecompanie.'/'.$monthYear;
      	$fileName=uniqid().$file->getClientOriginalName();
      	$moved=$file->move($path,$fileName);
 
 	      if($moved){
 	           $fileFac=new document();
-	           $fileFac->name=$name;
+             $fileFac->name=$name;
+             $fileFac->uuid=$name;
+	           $fileFac->url=$name;
 	           $fileFac->date=$date_Actual;
 	           $fileFac->document=$fileName;
 	           //$productImage->featured=;
-	           $fileFac->user_id=$user_id;
+             $fileFac->user_id=$user_id;
+	           $fileFac->companie_id=$idcompanie;
+             $fileFac->url='files/'.$namecompanie.'/'.$monthYear.'/';
+             $fileName='files/'.$namecompanie.'/'.$monthYear.'/'.$fileName;
 	           $fileFac->save();
-	           $fileName='images/documents/'.$fileName;
-	         try {
+
                 Mail::send('system.documents.send',['filename' => $fileName, 'name'=> $name],function($msj){
                     $msj->subject('Se cargo un nuevo archivo');
                     $msj->to($this->user_mail);
-                    $msj->cc('javeliecm@gmail.com');
+                    $msj->cc($this->empresa_mail);
                 });
                  
-             } catch (Exception $e) {
-                 return response()->json(['success'=>'Datos Cargados Correctamente, pero el correo no se envio']);
-             }
+
 	           
 	      }
 
@@ -70,7 +78,7 @@ class DocumentController extends Controller
         $notification="No fue posible eliminar el  documento, no existe o esta siendo utilizado :(";
         $documentf=document::find($id);
    
-        $fullPath=public_path() . '/images/documents/'.$documentf->document;
+        $fullPath=public_path() .'/'.$documentf->url.$documentf->document;
         $deleted=File::delete($fullPath); 
         
 
@@ -93,6 +101,7 @@ class DocumentController extends Controller
             
             $documents= document::where('date',">=",$initial)  
                                 ->where('date',"<=",$finald)  
+                                ->where('companie_id',$request->idem)  
                                 ->get();
             
 
@@ -111,7 +120,7 @@ class DocumentController extends Controller
 
                 $cont=0;
                 foreach($documents as $document) {
-                    $zip->addFile($public_dir . '/images/documents/'.$document->document, $document->document);
+                    $zip->addFile($public_dir .'/'.$document->url.$document->document, $document->document);
                     $cont++;
                 }        
 
@@ -135,28 +144,44 @@ class DocumentController extends Controller
 
 
 
-    public function show($companie){
+    public function show($companieName){
 
-      $companieId=companie::where("name_short",$companie)->first();
+      $companie=companie::where("name_short",$companieName)->first();
       
       $user_id=Auth::user()->id;
       $role=Auth::user()->role_id;
 
-      if(is_null($companieId) || empty($companieId)){
+
+      if(is_null($companie) || empty($companie)){
           abort(404);
         }
 
-        $name_companie=$companieId->name;
+    
 
-       if($role==1){
-            $documents= document::where("companie_id",$companieId->id)->paginate(10);
-        }else{
-            $documents= document::where('user_id',$user_id)->paginate(10);
+      // if($role<3){
+            $documents= document::where("companie_id",$companie->id)->paginate(10);
+        //}else{
+          //  $documents= document::where('user_id',$user_id)->paginate(10);
+        //}
+
+        if($role>2){
+           return view('companie.documents.index')->with(compact('documents','role','companie'));
         }
 
-        
+        return view('system.companies.documents')->with(compact('documents','role','companie'));
+    }
 
-        return view('system.companies.documents')->with(compact('documents','role','name_companie'));
+
+    public function sendemail(){
+
+      $user_namecompanie=Auth::user()->comapanie->name_short;
+
+
+       Mail::send('system.documents.send',['filename' => "prueba", 'name'=> "prueba"],function($msj){
+                    $msj->subject('Se cargo un nuevo archivo');
+                    $msj->cc('javeliecm@gmail.com');
+                });
+       return back();
     }
 
 }

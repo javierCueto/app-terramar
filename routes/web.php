@@ -16,8 +16,12 @@ Auth::routes();
 Route::middleware(['auth','admin'])->group(function () {
 	Route::get('/system/companie', 'CompanieController@index');//show
 	Route::post('/system/companie', 'CompanieController@store');//create
+	Route::post('/system/companie/edit/{id}', 'CompanieController@update');//update
 
-	
+
+
+
+
 	Route::get('/system/companie/{companie}/documents', 'DocumentController@show')->name('system');
 	Route::get('/system/user', 'UserController@index');//show
 	Route::post('/system/user', 'UserController@store');//show
@@ -30,9 +34,13 @@ Route::middleware(['auth','admin'])->group(function () {
 ///just companies
 Route::middleware(['auth','companie'])->group(function () {
 
-	/*Route::get('/system', 'HomeController@index')->name('system');
+	Route::get('/companie/{companie}/document', 'DocumentController@show');
+	Route::get('/companie/{companie}/document/load', 'DocumentController@index');
+	//Route::get('/companie/document/load', 'DocumentController@index');
+	Route::post('/companie/document', 'DocumentController@store');
+	Route::delete('/document/delete/{id}','DocumentController@destroy');
 
-	Route::get('/system/companie/{companie}', 'CompanieController@show')->name('system');
+	/*Route::get('/system/companie/{companie}', 'CompanieController@show')->name('system');
 
 
 	Route::get('/system/document/load', 'DocumentController@index');
@@ -48,3 +56,4 @@ Route::middleware(['auth','companie'])->group(function () {
 
 /////////////////////////////APIS
 Route::get('/api/user', 'UserController@getUsers');
+Route::get('/send', 'DocumentController@sendemail');

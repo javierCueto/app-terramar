@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class document extends Model
 {
-    public function getUrlAttribute(){
+    public function getUrl2Attribute(){
     	
 
     	return '/images/documents/'.$this->document;
