@@ -1,9 +1,16 @@
 @extends('layouts.public')
-@section('title','Inicio')
+@section('title','Documentos')
+
+
+@section('css')
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
+ 
+@endsection
 
 @section('content')
 
-<div class="wrapper">
+<div class="wrapper ">
     <div class="page-header page-header-xs" data-parallax="true" style="background-image: url('{{ asset('assets/img/fabio-mangione.jpg') }}');">
         <div class="filter"></div>
     </div>              
@@ -48,14 +55,16 @@
       </div>
       @endif
 
+        <button onclick="va()"> clic  </button>
+        <div id="datos">  </div>
       @if(!count($documents)==0)
 
-        <table class="table">
+        <table class="table" id="myTable">
           <thead class="thead-dark">
             <tr>
-              <th scope="col">#</th>
+              <th scope="col">ID</th>
               <th scope="col">Dueño</th>
-              <th scope="col">Nombre</th>
+              <th scope="col">UUID</th>
               <th scope="col">url</th>
               <th scope="col">Fecha de carga</th>
             </tr>
@@ -67,7 +76,7 @@
                 
 
             <tr>
-              <th scope="row">{{$key=$key+1}}</th>
+              <th scope="row">{{$document->id}}</th>
               <td>{{$document->name_user}}</td>
               <td>{{$document->name}}</td>
               <td>
@@ -81,7 +90,6 @@
           </tbody>
         </table>
 
-        {{$documents->links()}}
       
       @else
       <br>
@@ -200,3 +208,42 @@
 @include('includes.footer')
 @endsection
 
+@section('scripts')
+
+ <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+<script>
+  
+  $(document).ready( function () {
+    $('#myTable').DataTable({
+
+       "language": {
+    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+  },
+  "paging":false
+    });
+} );
+
+
+
+
+
+
+  function va(){
+    var table = $('#myTable').DataTable();
+      
+ 
+$('#datos').html(
+    table
+        .columns( 0 )
+        .data()
+        .eq( 0 )      // Reduce the 2D array into a 1D array of data
+        .sort()       // Sort data alphabetically
+        .unique()     // Reduce to unique values
+        .join( '<br>' )
+
+
+);
+  }
+</script>
+@endsection

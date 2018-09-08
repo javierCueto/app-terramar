@@ -159,7 +159,7 @@ class DocumentController extends Controller
     
 
       // if($role<3){
-            $documents= document::where("companie_id",$companie->id)->paginate(10);
+            $documents= document::where("companie_id",$companie->id)->get();
         //}else{
           //  $documents= document::where('user_id',$user_id)->paginate(10);
         //}
