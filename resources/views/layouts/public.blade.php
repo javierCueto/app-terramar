@@ -30,7 +30,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md fixed-top  bg-danger" >
+    <nav class="navbar navbar-expand-md fixed-top  bg-dark" >
         <div class="container">
             <div class="navbar-translate">
                 <button class="navbar-toggler navbar-toggler-right navbar-burger" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,7 @@
                                 <a class="nav-link" href="{{ url('/system/companie') }}">{{ __('Empresas') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/system/user') }}">{{ __('Usuarios') }}</a>
+                                <a class="nav-link" href="{{ url('/system/user.html') }}">{{ __('Usuarios') }}</a>
                             </li>
                             @endif
                             

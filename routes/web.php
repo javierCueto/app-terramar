@@ -25,8 +25,9 @@ Route::middleware(['auth','admin'])->group(function () {
 
 
 	Route::get('/system/companie/{companie}/documents', 'DocumentController@show')->name('system');
-	Route::get('/system/user', 'UserController@index');//show
-	Route::post('/system/user', 'UserController@store');//show
+	Route::get('/system/user.html', 'UserController@index');//show
+	Route::post('/system/user.html', 'UserController@store');//show
+	Route::post('/system/edit/user.html', 'UserController@update');//update
 });
 
 
