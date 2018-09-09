@@ -17,7 +17,7 @@
 </div>
 
 
-<nav class="navbar navbar-expand-md bg-dark">
+<nav class="navbar navbar-expand-md fixed-bottom bg-danger">
   <div class="container">
       <button class="navbar-toggler navbar-toggler-right burger-menu" type="button" data-toggle="collapse" data-target="#navbar-primary" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-bar"></span>
@@ -33,7 +33,11 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#"  onclick="idGet()"><i class="fa fa-file-pdf-o"></i> Descargar por filtro</a>
+            <form id="byFilter" action="{{ url('create_zip_filter')}}" method="post">
+              {{csrf_field()}}
+              <input type="hidden" id="fieldValues" name="fieldValues">
+            <a class="nav-link" href="#"   onclick="idGet()"><i class="fa fa-file-pdf-o"></i> Descargar por filtro</a>
+            </form>
           </li>
           @endif
           <li class="nav-item">
@@ -69,7 +73,7 @@
               <th scope="col">Dueño</th>
               <th scope="col">UUID</th>
               <th scope="col">url</th>
-              <th scope="col">Fecha de carga</th>
+              <th scope="col">Fecha</th>
             </tr>
           </thead>
            
@@ -92,8 +96,13 @@
            
           </tbody>
         </table>
-
-      
+        <br>
+      <br>
+        {{$documents->links()}}
+      <br>
+      <br>
+      <br>
+      <br>
       @else
       <br>
       <br>
@@ -218,6 +227,8 @@
 <script>
   
   $(document).ready( function () {
+
+
     $('#myTable').DataTable({
 
        "language": {
@@ -232,7 +243,8 @@
     null,
      { "searchable": false },
     null
-  ] 
+  ] ,
+   "order": [[ 4, "desc" ]]
     /////////////7
 
     });
@@ -266,11 +278,15 @@ $('#datos').html(
 
   //values from the table
   function  idGet(){
+
+
+
     var valores = [];
     $(".idValues").parent("tr").find("th").each(function() {
       valores.push($(this).html());
     });
-    sendValues(valores);
+    $('#fieldValues').val(valores);
+     $('#byFilter').submit(); 
   }
 
 

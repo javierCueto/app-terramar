@@ -6,11 +6,13 @@
 Route::get('/home', 'HomeController@index');
 Route::get('/', 'HomeController@index');
 
-Route::post('create-zip', 'DocumentController@zip')->name('create-zip');
 
+//downloads 
+Route::post('create-zip', 'DocumentController@zip')->name('create-zip');
 Route::post('create_zip_filter', 'DocumentController@zip_filter');
 
 
+//
 Auth::routes();
 
 
@@ -42,15 +44,6 @@ Route::middleware(['auth','companie'])->group(function () {
 	//Route::get('/companie/document/load', 'DocumentController@index');
 	Route::post('/companie/document', 'DocumentController@store');
 	Route::delete('/document/delete/{id}','DocumentController@destroy');
-
-	/*Route::get('/system/companie/{companie}', 'CompanieController@show')->name('system');
-
-
-	Route::get('/system/document/load', 'DocumentController@index');
-	Route::post('/system/document', 'DocumentController@store');
-	Route::delete('/system/document/delete/{id}','DocumentController@destroy');//delete
-
-	Route::post('/system/companie', 'CompanieController@store');*/
 
 });
 

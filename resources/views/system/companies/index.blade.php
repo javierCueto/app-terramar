@@ -10,7 +10,7 @@
 </div>
 
 
-<nav class="navbar navbar-expand-md bg-primary">
+<nav class="navbar navbar-expand-md bg-danger">
   <div class="container">
       <button class="navbar-toggler navbar-toggler-right burger-menu" type="button" data-toggle="collapse" data-target="#navbar-primary" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-bar"></span>
@@ -35,13 +35,19 @@
 <div class="container">  
   <div class="row">
    @if(count($companies)==0)
+
     <div class="col-sm-12">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">No tienen ninguna empresa dada de alta</h5>
         </div>
       </div>
+      <br>
+      <br>
+      <br>
+      <br>
     </div>
+
   @else
     @foreach($companies as $companie)
       <div class="col-sm-4">
@@ -98,7 +104,7 @@
                     <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>
-              </form>
+            </form>
         </div>
     </div>
 </div>

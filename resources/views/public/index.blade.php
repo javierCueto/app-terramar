@@ -4,12 +4,12 @@
 @section('content')
     <div class="wrapper">
 
-        <div class="page-header section-dark" style="background-image: url('{{ asset('assets/img/daniel-olahh.jpg') }}')">
+        <div class="page-header section-dark" style="background-image: url('{{ asset('assets/img/antoine-barres.jpg') }}')">
             <div class="filter"></div>
             <div class="content-center">
                 <div class="container">
                     <div class="title-brand">
-                        <h1 class="presentation-title"> Test</h1>
+                        <h1 class="presentation-title"> InvoicePDF</h1>
                         <div class="fog-low">
                             <img src="assets/img/fog-low.png" alt="">
                         </div>
@@ -18,7 +18,7 @@
                         </div>
                     </div>
 
-                    <h2 class="presentation-subtitle text-center">version 1.0</h2>
+                    <h2 class="presentation-subtitle text-center">{{date('d-m-Y')}}</h2>
                 </div>
             </div>
             <div class="moving-clouds" style="background-image: url('{{ asset('assets/img/clouds.png') }}'); ">

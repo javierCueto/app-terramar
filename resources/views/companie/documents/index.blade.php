@@ -47,7 +47,7 @@
               <th scope="col">Dueño</th>
               <th scope="col">Nombre</th>
               <th scope="col">url</th>
-              <th scope="col">Fecha de carga</th>
+              <th scope="col">Fecha</th>
               <th scope="col">Eliminar</th>
             </tr>
           </thead>
@@ -60,9 +60,9 @@
             <tr>
               <th scope="row">{{$key=$key+1}}</th>
               <td>{{$document->name_user}}</td>
-              <td>{{$document->name}}</td>
+              <td>{{$document->uuid}}</td>
               <td>
-                    <a class="text-danger" href="{{url($document->url.$document->document)}}">{{$document->document}}</a>
+                    <a class="text-danger" href="{{url($document->url.$document->document)}}">{{url($document->url.$document->document)}}</a>
               </td>
               <td>{{$document->created_at->format('d/m/Y')}}</td>
               <td class="text-success">
