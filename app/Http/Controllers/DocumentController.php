@@ -37,36 +37,38 @@ class DocumentController extends Controller
 
 
     	$file=$request ->file('document');
-    	$name=$request ->input('name');
+
+      //name now is uuid
+      $exten=strtolower($file->getClientOriginalExtension());
+    	$uuid=$request ->input('uuid');
      	$path=public_path() . '/files/'.$namecompanie.'/'.$monthYear;
-     	$fileName=uniqid().$file->getClientOriginalName();
-     	$moved=$file->move($path,$fileName);
+     	$fileName=$file->getClientOriginalName();
+     	$moved=$file->move($path,$uuid.'.'.$exten);
 
 	      if($moved){
 	           $fileFac=new document();
-             $fileFac->name=$name;
-             $fileFac->uuid=$name;
-	           $fileFac->url=$name;
+             $fileFac->name=$fileName;
+             $fileFac->uuid=$uuid;
 	           $fileFac->date=$date_Actual;
-	           $fileFac->document=$fileName;
+	           $fileFac->document=$uuid.'.'.$exten;
 	           //$productImage->featured=;
              $fileFac->user_id=$user_id;
 	           $fileFac->companie_id=$idcompanie;
              $fileFac->url='files/'.$namecompanie.'/'.$monthYear.'/';
-             $fileName='files/'.$namecompanie.'/'.$monthYear.'/'.$fileName;
+             $fileName='files/'.$namecompanie.'/'.$monthYear.'/'.$uuid.'.'.$exten;
 	           $fileFac->save();
 
-                Mail::send('system.documents.send',['filename' => $fileName, 'name'=> $name],function($msj){
+                Mail::send('system.documents.send',['filename' => $fileName, 'name'=> $uuid],function($msj){
                     $msj->subject('Se cargo un nuevo archivo');
                     $msj->to($this->user_mail);
                     $msj->cc($this->empresa_mail);
                 });
                  
-
+          return response()->json(['success'=>'Datos Cargados Correctamente, desea cargar mas?']);
 	           
 	      }
 
-          return response()->json(['success'=>'Datos Cargados Correctamente, desea cargar mas?']);
+          return response()->json(['success'=>'Lo sentimos el archivo no se puedo subir :(']);
 
 	   // return redirect('system');
     }
@@ -139,6 +141,56 @@ class DocumentController extends Controller
             }
         }
         return back();
+     }
+
+
+
+
+     public function zip_filter(Request $request){
+      
+         $datos=$request->input('search'); //Aqui obtienes el valor del input ajax
+
+
+        
+            
+
+            // Define Dir Folder
+            $public_dir=public_path();
+            // Zip File Name
+            $zipFileName = 'All.zip';
+            $fullPath=public_path() . '/downloads/facturas/'.$zipFileName ;
+            $deleted=File::delete($fullPath); 
+
+            // Create ZipArchive Obj
+            $zip = new ZipArchive;
+
+            if ($zip->open($public_dir . '/downloads/facturas/' . $zipFileName, ZipArchive::CREATE) === TRUE) {    
+                // Add Multiple file   
+
+                $cont=0;
+                foreach($datos as $dato) {
+
+                      $document=document::find($dato);
+
+                    $zip->addFile($public_dir .'/'.$document->url.$document->document, $document->document);
+                    $cont++;
+                }        
+
+                $zip->close();
+
+            }
+
+            // Set Header
+            $headers = array(
+                'Content-Type' => 'application/octet-stream',
+            );
+            $filetopath=$public_dir.'/downloads/facturas/'.$zipFileName;
+            // Create Download Response
+            if(file_exists($filetopath)){
+                return response()->download($filetopath,$zipFileName,$headers);
+            }
+  
+     
      }
 
 

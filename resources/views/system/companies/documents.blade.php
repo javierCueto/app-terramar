@@ -29,7 +29,11 @@
         <ul class="navbar-nav ml-auto">
           @if(!count($documents)==0)
           <li class="nav-item">
-            <a class="nav-link" href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-file-pdf-o"></i> Descargar facturas</a>
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-file-pdf-o"></i> Descargar facturas por fecha</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#"  onclick="idGet()"><i class="fa fa-file-pdf-o"></i> Descargar por filtro</a>
           </li>
           @endif
           <li class="nav-item">
@@ -54,11 +58,10 @@
         {{session('notification')}}
       </div>
       @endif
-
-        <button onclick="va()"> clic  </button>
         <div id="datos">  </div>
       @if(!count($documents)==0)
 
+      
         <table class="table" id="myTable">
           <thead class="thead-dark">
             <tr>
@@ -76,11 +79,11 @@
                 
 
             <tr>
-              <th scope="row">{{$document->id}}</th>
+              <th class="idValues" scope="row">{{$document->id}}</th>
               <td>{{$document->name_user}}</td>
-              <td>{{$document->name}}</td>
+              <td>{{$document->uuid}}</td>
               <td>
-                    <a class="text-danger" href="{{url($document->url.$document->document)}}">{{$document->document}}</a>
+                    <a class="text-danger" href="{{url($document->url.$document->document)}}">{{url($document->url.$document->document)}}</a>
               </td>
               <td>{{$document->created_at->format('d/m/Y')}}</td>
 
@@ -131,7 +134,7 @@
             <div class="form-group">
               <label for="fechainial">Fecha Inicial</label>
               <input type="date" class="form-control" id="fechainicial" name="fechainicial" placeholder="" required="">
-              <input type="hidden" class="form-control" id="douwload" name="download" value="zip">
+              <input type="hidden" class="form-control" id="download" name="download" value="zip">
             </div>
 
             <div class="form-group">
@@ -220,7 +223,18 @@
        "language": {
     "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
   },
-  "paging":false
+  "paging":false,
+    ////////////////7
+
+"columns": [
+    { "searchable": false },
+    null,
+    null,
+     { "searchable": false },
+    null
+  ] 
+    /////////////7
+
     });
 } );
 
@@ -245,5 +259,48 @@ $('#datos').html(
 
 );
   }
+
+
+
+
+
+  //values from the table
+  function  idGet(){
+    var valores = [];
+    $(".idValues").parent("tr").find("th").each(function() {
+      valores.push($(this).html());
+    });
+    sendValues(valores);
+  }
+
+
+  //send values to controller
+  function sendValues(dato){
+
+          $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+          });
+
+          $.ajax({
+             url:"{{ url('create_zip_filter')}}",
+            type:'post',
+            data:{ search:dato }, //Aqui tienes que enviar el objeto json
+
+            success:function(response){
+                console.log(response);
+                if(response.zip) {
+            location.href = response.zip;
+        }
+            },
+           error:function(){
+              alert('Error al obtener el archivo');// solo ingresa a esta parte
+           }
+       });
+
+  }
+  
+
 </script>
 @endsection

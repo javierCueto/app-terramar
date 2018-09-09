@@ -41,13 +41,13 @@
             <form id="sendFile" method="post" enctype="multipart/form-data" class="">
                 {{csrf_field()}}
                 <div class="form-group">
-                  <label for="name">Nombre del archivo</label>
-                  <input type="text" class="form-control" id="name" name="name" placeholder="Nombre del archivo" required="">
+                  <label for="uuid">UUID de la factura</label>
+                  <input type="text" class="form-control" id="uuid" name="uuid" placeholder="uuid del documento" required="">
                 </div>
 
                 <div class="form-group">
                   <label for="document">Cargar archivos</label>
-                  <input type="file" class="form-control-file" id="document" name="document" required="">
+                  <input type="file" class="form-control-file" id="document" name="document" required="" accept=".pdf,.zip,.rar">
                 </div>
 
                  <button class="btn btn-danger" id="sendfile">Guardar</button>
@@ -88,48 +88,67 @@
   jQuery(document).ready(function(){         
     
     jQuery('#sendFile').on('submit', function(e) {
-      $("#sendfile").prop("disabled", true);
-      $('#myModal').modal('show');
-      e.preventDefault();
 
-      var formData = new FormData(this);
-      $.ajaxSetup({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-        }
-      });
+      var fileInput = document.getElementById('document');
+      var filePath = fileInput.value;
+      var allowedExtensions = /(.pdf|.rar|.zip)$/i;
+      if(!allowedExtensions.exec(filePath)){
+          alert('Solo se permiten archivos PDF, Zip, RAR');
+          fileInput.value = '';
+          return false;
+      }else{
+
+        $("#sendfile").prop("disabled", true);
+        $('#myModal').modal('show');
+        e.preventDefault();
+
+        var formData = new FormData(this);
+        $.ajaxSetup({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+          }
+        });
 
 
 
-      jQuery.ajax({
-        url: "{{ url('companie/document') }}",
-        method: 'post',
-        data: formData,
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function(result){ 
-          $('#myModal').modal('hide');
+        jQuery.ajax({
+          url: "{{ url('companie/document') }}",
+          method: 'post',
+          data: formData,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function(result){ 
+            $('#myModal').modal('hide');
 
-          jQuery('.message').html('<i class="nc-icon nc-bell-55"></i> '+result.success);
+            jQuery('.message').html('<i class="nc-icon nc-bell-55"></i> '+result.success);
 
-           
-          jQuery('.mess').show();
+             
+            jQuery('.mess').show();
 
-           $("#sendfile").prop("disabled", false);
-           $('#sendFile')[0].reset();
+             $("#sendfile").prop("disabled", false);
+             $('#sendFile')[0].reset();
 
-        },error: function(jqXHR, text, error){
+          },error: function(jqXHR, text, error){
 
-          alert(jqXHR);alert(text);alert(error);
-          $("#sendfile").prop("disabled", false);
-          $('#myModal').modal('hide');
-        }
-      });
+            alert(jqXHR);alert(text);alert(error);
+            $("#sendfile").prop("disabled", false);
+            $('#myModal').modal('hide');
+          }
+        });
 
-        // setTimeout(function() {
-        //   jQuery('.mess').hide();
-        // },3000);
+          // setTimeout(function() {
+          //   jQuery('.mess').hide();
+          // },3000);
+
+          //end else
+      }
+
+
+
+
+
+
     });
   });
 

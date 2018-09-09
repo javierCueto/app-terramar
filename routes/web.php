@@ -8,6 +8,8 @@ Route::get('/', 'HomeController@index');
 
 Route::post('create-zip', 'DocumentController@zip')->name('create-zip');
 
+Route::post('create_zip_filter', 'DocumentController@zip_filter');
+
 
 Auth::routes();
 
