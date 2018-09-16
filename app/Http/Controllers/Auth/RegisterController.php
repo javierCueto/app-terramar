@@ -70,4 +70,10 @@ class RegisterController extends Controller
             'role_id'=> 3,
         ]);
     }
+
+
+      public function showRegistrationForm()
+    {
+         abort(404);
+    }
 }

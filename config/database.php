@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'default' => 'at_core',
+    'default' => 'sqlsrv',
+    // 'default' => 'at_core',
 
     /*
     |--------------------------------------------------------------------------
@@ -69,11 +70,11 @@ return [
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '1433'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => env('DBs_HOST', 'localhost'),
+            'port' => env('DBs_PORT', '1433'),
+            'database' => env('DBs_DATABASE', 'forge'),
+            'username' => env('DBs_USERNAME', 'forge'),
+            'password' => env('DBs_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
         ],

@@ -193,7 +193,7 @@
 
 
                 <div class="form-group">
-                  <label for="email">Email donde se notificara</label>
+                  <label for="email">Email donde se notificara que la empresa cargo un archivo</label>
                   <input type="email" class="form-control" id="email" name="email" placeholder="Correo" required="" value="{{$companie->email}}">
                 </div>
 

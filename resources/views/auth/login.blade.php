@@ -56,9 +56,9 @@
                                                 {{ __('Entrar') }}
                                             </button>
 
-                                            <a class="btn btn-info btn-block " href="{{ route('register') }}">
+                                          <!--   <a class="btn btn-info btn-block " href="{{ route('register') }}">
                                                 {{ __('Registrarse') }}
-                                            </a>
+                                            </a> -->
 
                                             <a class="btn btn-link btn-block " href="{{ route('password.request') }}">
                                                 {{ __('Olvide mi contraseña?') }}

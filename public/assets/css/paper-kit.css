@@ -2555,7 +2555,7 @@ textarea.form-control {
   background-color: #f39c12;
   border-radius: 8px;
   color: #fff;
-  max-width: 350px;
+  /*max-width: 350px;*/
   margin: 120px 0 70px;
   min-height: 400px;
   padding: 30px;

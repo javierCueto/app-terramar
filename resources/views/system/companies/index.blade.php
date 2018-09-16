@@ -20,9 +20,15 @@
       <a class="navbar-brand" href="#"><i class="fa fa-building"></i> Empresas</a>
       <div class="collapse navbar-collapse" id="navbar-primary">
         <ul class="navbar-nav ml-auto">
+          @if($available==8)
           <li class="nav-item">
-            <a class="nav-link" href="#" data-toggle="modal" data-target="#myModal">{{$available}} <i class="fa fa-building"></i> Alta empresa</a>
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-building"></i> Alta empresa</a>
           </li>
+          @elseif($available<=7 && $available>=1 && Auth::user()->role->id==1 && (Auth::user()->email=='root@root.com'))
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-toggle="modal" data-target="#myModal">{{$available}} <i class="fa fa-building"></i> Alta empresa</a>
+            </li>
+           @endif
         </ul>
       </div>
   </div>
@@ -90,7 +96,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="email">Email donde se notificara</label>
+                  <label for="email">Email donde se notificara que la empresa cargo un archivo</label>
                   <input type="email" class="form-control" id="email" name="email" placeholder="Correo" required="" >
                 </div>
 
