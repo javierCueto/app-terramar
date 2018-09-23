@@ -45,7 +45,8 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">Dueño</th>
-              <th scope="col">Nombre</th>
+              <th scope="col">Serie</th>
+              <th scope="col">Folio</th>
               <th scope="col">url</th>
               <th scope="col">Fecha</th>
               <th scope="col">Eliminar</th>
@@ -60,7 +61,8 @@
             <tr>
               <th scope="row">{{$key=$key+1}}</th>
               <td>{{$document->name_user}}</td>
-              <td>{{$document->uuid}}</td>
+              <td>{{$document->serie}}</td>
+              <td>{{$document->folio}}</td>
               <td>
                     <a class="text-danger" href="{{url($document->url.$document->document)}}">{{url($document->url.$document->document)}}</a>
               </td>

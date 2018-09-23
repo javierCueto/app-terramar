@@ -45,13 +45,26 @@ class UserController extends Controller
         if(count($email)){
             return response()->json("rpt");
         }else{
-            User::create([
+
+            if($request->rol==2){
+                User::create([
+                    'name'=>$request->name,
+                    'email'=>$request->email,
+                    'password'=>Hash::make($request->password),
+                    'role_id'=>$request->rol,
+                ]);
+
+            }else{
+                User::create([
                 'name'=>$request->name,
                 'email'=>$request->email,
                 'password'=>Hash::make($request->password),
                 'role_id'=>$request->rol,
                 'companie_id'=>$request->companie,
             ]);
+
+            }
+
 
              return response()->json("Guardado con éxito");
         }

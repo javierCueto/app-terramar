@@ -39,31 +39,39 @@ class DocumentController extends Controller{
 
     //name now is uuid
     $exten=strtolower($file->getClientOriginalExtension());
-    $uuid=$request ->input('uuid');
+    $serie=$request ->input('serie');
+    $folio=$request ->input('folio');
+    $nameAndExt=$serie.'_'.$folio.'.'.$exten;
     $path=public_path() . '/files/'.$namecompanie.'/'.$monthYear;
     $fileName=$file->getClientOriginalName();
-    $moved=$file->move($path,$uuid.'.'.$exten);
+    $moved=$file->move($path,$nameAndExt);
 
     if($moved){
          $fileFac=new document();
          $fileFac->name=$fileName;
-         $fileFac->uuid=$uuid;
+         $fileFac->serie=$serie;
+         $fileFac->folio=$folio;
          $fileFac->date=$date_Actual;
-         $fileFac->document=$uuid.'.'.$exten;
-         //$productImage->featured=;
+         $fileFac->document=$nameAndExt;
          $fileFac->user_id=$user_id;
          $fileFac->companie_id=$idcompanie;
          $fileFac->url='files/'.$namecompanie.'/'.$monthYear.'/';
-         $fileName='files/'.$namecompanie.'/'.$monthYear.'/'.$uuid.'.'.$exten;
+         $fileName='files/'.$namecompanie.'/'.$monthYear.'/'.$nameAndExt;
          $fileFac->save();
 
-            Mail::send('system.documents.send',['filename' => $fileName, 'name'=> $uuid],function($msj){
-                $msj->subject('Se cargo un nuevo archivo');
-                $msj->to($this->user_mail);
-                $msj->cc($this->empresa_mail);
-            });
-             
-      return response()->json(['success'=>'Datos Cargados Correctamente, desea cargar mas?']);
+
+
+
+            Mail::send('system.documents.send',['filename' => $fileName, 'name'=> 'Archivo cargado...'],function($msj){
+                      $msj->subject('Se cargo un nuevo archivo');
+                      $msj->to($this->user_mail);
+                      $msj->cc($this->empresa_mail);
+                  });
+
+
+            return response()->json(['success'=>'Datos Cargados Correctamente, desea cargar mas?']);
+
+          
          
     }
 
@@ -215,5 +223,25 @@ class DocumentController extends Controller{
               });
      return back();
   }
+
+
+
+  // public function emailToCompanieAndAdmin($fileName){
+  //   try {
+
+  //     dd(Mail::send('system.documents.send',['filename' => $fileName, 'name'=> 'Archivo cargado...'],function($msj){
+  //               $msj->subject('Se cargo un nuevo archivo');
+  //               $msj->to($this->user_mail);
+  //               $msj->cc($this->empresa_mail);
+  //           }));
+
+  //     return true();
+      
+  //   } catch (\Exception $e) {
+  //     return false();
+  //   }
+     
+     
+  // }
 
 }

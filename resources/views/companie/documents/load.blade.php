@@ -9,12 +9,21 @@
     </div>              
 </div>
 
-<div class="jumbotron jumbotron-fluid">
+<nav class="navbar navbar-expand-md bg-danger">
   <div class="container">
-    <h2>Carga de archivos</h2>
+      <button class="navbar-toggler navbar-toggler-right burger-menu" type="button" data-toggle="collapse" data-target="#navbar-primary" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-bar"></span>
+          <span class="navbar-toggler-bar"></span>
+          <span class="navbar-toggler-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><i class="fa fa-building"></i> Documentos</a>
+      <div class="collapse navbar-collapse" id="navbar-primary">
+      </div>
   </div>
-</div>
-
+</nav>
+<br>
+<br>
+<br>
 
 <div class="div ">
   <div class="container ">
@@ -41,13 +50,17 @@
             <form id="sendFile" method="post" enctype="multipart/form-data" class="">
                 {{csrf_field()}}
                 <div class="form-group">
-                  <label for="uuid">UUID de la factura</label>
-                  <input type="text" class="form-control" id="uuid" name="uuid" placeholder="uuid del documento" required="">
+                  <label for="serie">Serie:</label>
+                  <input type="text" class="form-control" id="serie" name="serie" placeholder="Serie del documento" >
+                </div>
+                <div class="form-group">
+                  <label for="folio">Folio:</label>
+                  <input type="text" class="form-control" id="folio" name="folio" placeholder="Folio del documento" required="">
                 </div>
 
                 <div class="form-group">
-                  <label for="document">Cargar archivos</label>
-                  <input type="file" class="form-control-file" id="document" name="document" required="" accept=".pdf,.zip,.rar">
+                  <label for="document">Cargar archivo</label>
+                  <input type="file" class="form-control-file" id="document" name="document" required="" accept=".pdf,.zip,.rar" title="Seleccio el documento correspondiente">
                 </div>
 
                  <button class="btn btn-danger" id="sendfile">Guardar</button>

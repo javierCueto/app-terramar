@@ -15,14 +15,17 @@ class CreateDocumentsTable extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('uuid');
+            $table->string('name')->nullable();;
+            $table->string('uuid')->nullable();;
+            $table->string('folio')->nullable();;
+            $table->string('serie')->nullable();;
             $table->string('document');
             $table->string('url');
             $table->boolean('status')->default(true);
             $table->boolean('notification')->default(false);
             $table->date('date');
             $table->text('about')->nullable();
+            $table->text('tipo')->nullable();
             $table->unsignedInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             

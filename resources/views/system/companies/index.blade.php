@@ -24,7 +24,7 @@
           <li class="nav-item">
             <a class="nav-link" href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-building"></i> Alta empresa</a>
           </li>
-          @elseif($available<=7 && $available>=1 && Auth::user()->role->id==1 && (Auth::user()->email=='root@root.com'))
+          @elseif($available<=7 && $available>=1 && Auth::user()->role->id==1 && (Auth::user()->name=='root'))
             <li class="nav-item">
               <a class="nav-link" href="#" data-toggle="modal" data-target="#myModal">{{$available}} <i class="fa fa-building"></i> Alta empresa</a>
             </li>

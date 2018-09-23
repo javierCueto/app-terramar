@@ -71,7 +71,8 @@
             <tr>
               <th scope="col">ID</th>
               <th scope="col">Dueño</th>
-              <th scope="col">UUID</th>
+              <th scope="col">Serie</th>
+              <th scope="col">Folio</th>
               <th scope="col">url</th>
               <th scope="col">Fecha</th>
             </tr>
@@ -85,7 +86,8 @@
             <tr>
               <th class="idValues" scope="row">{{$document->id}}</th>
               <td>{{$document->name_user}}</td>
-              <td>{{$document->uuid}}</td>
+              <td>{{$document->serie}}</td>
+              <td>{{$document->folio}}</td>
               <td>
                     <a class="text-danger" href="{{url($document->url.$document->document)}}">{{url($document->url.$document->document)}}</a>
               </td>
@@ -227,34 +229,24 @@
 <script>
   
   $(document).ready( function () {
-
-
     $('#myTable').DataTable({
-
        "language": {
     "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
   },
   "paging":false,
     ////////////////7
-
 "columns": [
     { "searchable": false },
+    null,
     null,
     null,
      { "searchable": false },
     null
   ] ,
-   "order": [[ 4, "desc" ]]
+   "order": [[ 5, "desc" ]]
     /////////////7
-
     });
 } );
-
-
-
-
-
-
   function va(){
     var table = $('#myTable').DataTable();
       
@@ -267,20 +259,10 @@ $('#datos').html(
         .sort()       // Sort data alphabetically
         .unique()     // Reduce to unique values
         .join( '<br>' )
-
-
 );
   }
-
-
-
-
-
   //values from the table
   function  idGet(){
-
-
-
     var valores = [];
     $(".idValues").parent("tr").find("th").each(function() {
       valores.push($(this).html());
@@ -288,22 +270,17 @@ $('#datos').html(
     $('#fieldValues').val(valores);
      $('#byFilter').submit(); 
   }
-
-
   //send values to controller
   function sendValues(dato){
-
           $.ajaxSetup({
           headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
           });
-
           $.ajax({
              url:"{{ url('create_zip_filter')}}",
             type:'post',
             data:{ search:dato }, //Aqui tienes que enviar el objeto json
-
             success:function(response){
                 console.log(response);
                 if(response.zip) {
@@ -314,9 +291,7 @@ $('#datos').html(
               alert('Error al obtener el archivo');// solo ingresa a esta parte
            }
        });
-
   }
   
-
 </script>
 @endsection
