@@ -1,5 +1,9 @@
 <?php
 
+Route::get('notify', function () {
+    $user = \App\User::find(3);
+    $user->notify(new \App\Notifications\NewNotification());
+});
 
 
 ///////////public routes

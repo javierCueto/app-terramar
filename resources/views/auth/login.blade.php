@@ -1,80 +1,82 @@
-@extends('layouts.public')
-@section('title','Login')
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Login</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-@section('content')
+  <link href="{{ asset('css/login.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" id="main-stylesheet" data-version="1.1.0" href="{{ asset('core/styles/accents/info.1.1.0.css') }}">
+</head>
+<body class="antialiased font-sans">
+  <div class="md:flex min-h-screen">
+    <div class="w-full md:w-1/2 bg-white flex items-center justify-center">
+      <div class="col-md-10">
+          <div class="form-group">   
+            <h2>Login</h2>
+            <br>
+            <div class="h-1 bg-info" style="background-color:#f7765f !important"></div>
+        
+          </div>
 
+        <form class="register-form" method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
+          @csrf
+          <div class="form-group">
+            <label for="email" >{{ __('E-Mail') }}</label>
+            <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
 
-<div class="wrapper">
-        <div class="page-header" style="background-image: url('../assets/img/login-image.jpg');">
-            <div class="filter"></div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-4 ml-auto mr-auto">
-                            <div class="card card-register">
-                                <h3 class="title">Bienvenido</h3>
-                                
-                                 <form class="register-form" method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
-                                     @csrf
-                                    <label for="email" >{{ __('E-Mail') }}</label>
-
-
-                                    
-                                        <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
-
-                                        @if ($errors->has('email'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('email') }}</strong>
-                                            </span>
-                                        @endif
+            @if ($errors->has('email'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('email') }}</strong>
+                </span>
+            @endif
+          </div>
                                    
+          <div class="form-group">
+            <label for="password" >{{ __('Password') }}</label>
+            <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
 
-                                   
+            @if ($errors->has('password'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('password') }}</strong>
+                </span>
+            @endif
+          </div>
+          
+          <div class="form-group">
+            <div class="custom-control custom-checkbox mb-1">
+                <input type="checkbox" class="custom-control-input" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                <label class="custom-control-label" for="remember">{{ __('Recuérdame') }}</label>
+            </div>                         
+          </div>
+                                                       
+          <button type="submit" class="btn btn-info btn-block"  style="background:#f7765f;    border-color: #f7765f">
+            {{ __('Entrar') }}
+          </button>
 
-                                    <label for="password" >{{ __('Password') }}</label>
+          <!--   <a class="btn btn-info btn-block " href="{{ route('register') }}">
+                {{ __('Registrarse') }}
+            </a> -->
 
-                                    
-                                        <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+          <a class="btn btn-link btn-block " href="{{ route('password.request') }}">
+              {{ __('Olvide mi contraseña?') }}
+          </a>
 
-                                        @if ($errors->has('password'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('password') }}</strong>
-                                            </span>
-                                        @endif
-                                   
-                                        <div class="form-check">
-                                            <label for="remember" class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                                 {{ __('Recuerdame Me') }}
-                                                <span class="form-check-sign"></span>
-                                            </label>
-                                        </div>
-                                        
-
-                               
-                                  
-                                            <button type="submit" class="btn btn-warning btn-block ">
-                                                {{ __('Entrar') }}
-                                            </button>
-
-                                          <!--   <a class="btn btn-info btn-block " href="{{ route('register') }}">
-                                                {{ __('Registrarse') }}
-                                            </a> -->
-
-                                            <a class="btn btn-link btn-block " href="{{ route('password.request') }}">
-                                                {{ __('Olvide mi contraseña?') }}
-                                            </a>
-                                   
-                                </form>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="footer register-footer text-center">
-                        <h6>&copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by JJAvier </h6>
-                    </div>
-                </div>
-        </div>
+          <a class="btn btn-link btn-block " href="{{ url('/') }}">
+              {{ __('Inicio') }}
+          </a>
+        </form>
+      </div>
     </div>
 
 
-@endsection
+    <div class="relative pb-full md:flex md:pb-0 md:min-h-screen w-full md:w-1/3">
+        <div style="background-image: url('../assets/img/login-image.jpg');"  class="absolute pin bg-cover bg-no-repeat md:bg-left lg:bg-center">
+        </div>
+    </div>
+  </div>
+</body>
+</html>
+            

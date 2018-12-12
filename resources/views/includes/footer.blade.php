@@ -1,4 +1,4 @@
-<footer class="footer footer-black">
+<!-- <footer class="footer footer-black">
     <div class="container">
         <div class="row">
             <div class="credits ml-auto">
@@ -8,4 +8,4 @@
             </div>
         </div>
     </div>
-</footer>
+</footer> -->
