@@ -36,6 +36,7 @@ class DocumentController extends Controller{
     $idcompanie=Auth::user()->companie_id;
     $this->empresa_mail=Auth::user()->companie->email;
     $this->user_mail=Auth::user()->email;
+    $route=$this->route_url();
 
 
     $file=$request ->file('document');
@@ -59,17 +60,28 @@ class DocumentController extends Controller{
          $fileFac->user_id=$user_id;
          $fileFac->companie_id=$idcompanie;
          $fileFac->url='files/'.$namecompanie.'/'.$monthYear.'/';
-         $fileName='files/'.$namecompanie.'/'.$monthYear.'/'.$nameAndExt;
+         $fileName=$route.'files/'.$namecompanie.'/'.$monthYear.'/'.$nameAndExt;
          $fileFac->save();
 
 
+    $user = \App\User::find($user_id);
+    $user->notify(new NewNotification($fileName));
+
+    $companie = \App\companie::find($idcompanie);
+    $companie->notify(new NewNotification($fileName));
+
+    // $user = \App\User::find($companie_id);
+    // $user->notify(new NewNotification($fileName));
 
 
-            Mail::send('system.documents.send',['filename' => $fileName, 'name'=> 'Archivo cargado...'],function($msj){
-                      $msj->subject('Se cargo un nuevo archivo');
-                      $msj->to($this->user_mail);
-                      $msj->cc($this->empresa_mail);
-                  });
+
+
+
+            // Mail::send('system.documents.send',['filename' => $fileName, 'name'=> 'Archivo cargado...'],function($msj){
+            //           $msj->subject('Se cargo un nuevo archivo');
+            //           $msj->to($this->user_mail);
+            //           $msj->cc($this->empresa_mail);
+            //       });
 
 
             return response()->json(['success'=>'Datos Cargados Correctamente, desea cargar mas?']);
@@ -191,13 +203,8 @@ class DocumentController extends Controller{
 
 
 
-
   public function show($companieName){
-   
-       $route=configManager::find(1);
-    $route=$route->route;
-
-
+    $route=$this->route_url();
     $companie=companie::where("name_short",$companieName)->first();
     $user_id=Auth::user()->id;
     $role=Auth::user()->role_id;
@@ -232,10 +239,18 @@ class DocumentController extends Controller{
      return back();
   }
 
+  public function route_url(){    
+    $route=configManager::find(1);
+    return $route=$route->route;
+  }
+
 
 public function notify(){
+    $ruta="holamundo";
+    $user = \App\companie::find(1);
+    $user->notify(new NewNotification($ruta));
 
-Mail::to("javeliecm@gmail.com")->send(new NewNotification());
+
 
 
 }

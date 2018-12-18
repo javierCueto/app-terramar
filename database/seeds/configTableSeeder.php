@@ -21,7 +21,7 @@ class configTableSeeder extends Seeder
     	);
 
     	if($command=="Produccion"){
-    		$command="public/";
+    		$command="cloud/";
     	}else{
     		$command="";
     	}
