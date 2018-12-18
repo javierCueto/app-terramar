@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\document;
 use App\companie;
+use App\configManager;
+use App\Notifications\NewNotification;
 use Mail;
 Use Session;
 use Redirect;
@@ -25,6 +27,7 @@ class DocumentController extends Controller{
   public $user_mail;
   public $empresa_mail;
   public function store(Request $request){
+
     $now = new \DateTime();
     $date_Actual =$now->format('Y-m-d');
  		$monthYear =$now->format('Y-m');
@@ -190,6 +193,11 @@ class DocumentController extends Controller{
 
 
   public function show($companieName){
+   
+       $route=configManager::find(1);
+    $route=$route->route;
+
+
     $companie=companie::where("name_short",$companieName)->first();
     $user_id=Auth::user()->id;
     $role=Auth::user()->role_id;
@@ -204,14 +212,14 @@ class DocumentController extends Controller{
     $documents=document::where("companie_id",$companie->id)
               ->orderBy('created_at','desc')
               ->paginate(10);
-      return view('companie.documents.index')->with(compact('documents','role','companie'));
+      return view('companie.documents.index')->with(compact('documents','role','companie','route'));
     }
 
       $documents=document::where("companie_id",$companie->id)
               ->orderBy('created_at','desc')
               ->paginate(500);
 
-    return view('system.companies.documents')->with(compact('documents','role','companie'));
+    return view('system.companies.documents')->with(compact('documents','role','companie','route'));
   }
 
 
@@ -224,6 +232,13 @@ class DocumentController extends Controller{
      return back();
   }
 
+
+public function notify(){
+
+Mail::to("javeliecm@gmail.com")->send(new NewNotification());
+
+
+}
 
 
   // public function emailToCompanieAndAdmin($fileName){

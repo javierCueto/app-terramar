@@ -1,9 +1,17 @@
 <?php
 
-Route::get('notify', function () {
-    $user = \App\User::find(3);
-    $user->notify(new \App\Notifications\NewNotification());
-});
+
+
+// Route::get('notify', function () {
+
+
+
+
+//     //$user = \App\User::find(3);
+//     //$user->notify(new \App\Notifications\NewNotification());
+// });
+
+	Route::get('/notify', 'DocumentController@notify');//show
 
 
 ///////////public routes
